@@ -159,6 +159,6 @@ let kaiser = {
   }
 };
 
-kaiser.sayHi();   // Esha
+// kaiser.sayHi();   // Esha
 
 // That’s a special feature of arrow functions, it’s useful when we actually do not want to have a separate this, but rather to take it from the outer context. 
