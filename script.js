@@ -90,3 +90,14 @@ person = null; // overwrite to make things obvious
 // TypeError: Cannot read property 'name' of null at Object.sayHi => if `person.name` is used instead of `this.name`:
 
 
+//  ********** Object-oriented programming *******
+
+// When we write our code using objects to represent entities, that’s called object-oriented programming, in short: “OOP”.
+
+// OOP is a big thing, an interesting science of its own. How to choose the right entities? How to organize the interaction between them? 
+
+// That’s architecture, and there are great books on that topic, like “Design Patterns: Elements of Reusable Object-Oriented Software” by E. Gamma, R. Helm, R. Johnson, J. Vissides or “Object-Oriented Analysis and Design with Applications” by G. Booch, and more.
+
+
+// ******** “this” is not bound **********
+
