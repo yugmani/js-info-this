@@ -73,14 +73,14 @@ let person = {
     // `this` is the `current object`.
     console.log('With this: ' + this.name);
     // Or
-    console.log('With person: ' + person.name);
+    console.log('Without this: ' + person.name);
     // `person` instead of `this`. But it is unreliable. If we decide to copy `person` to another variable, e.g. `admin = person` and overwrite `person` with something else, then it will access the wrong object.
   }
 };
 
 // person.sayHi();
 // With this: Umesh
-// With person: Umesh
+// Without this: Umesh
 
 let admin = person;
 person = null; // overwrite to make things obvious
@@ -89,15 +89,76 @@ person = null; // overwrite to make things obvious
 
 // TypeError: Cannot read property 'name' of null at Object.sayHi => if `person.name` is used instead of `this.name`:
 
-
 //  ********** Object-oriented programming *******
 
 // When we write our code using objects to represent entities, that’s called object-oriented programming, in short: “OOP”.
 
-// OOP is a big thing, an interesting science of its own. How to choose the right entities? How to organize the interaction between them? 
+// OOP is a big thing, an interesting science of its own. How to choose the right entities? How to organize the interaction between them?
 
 // That’s architecture, and there are great books on that topic, like “Design Patterns: Elements of Reusable Object-Oriented Software” by E. Gamma, R. Helm, R. Johnson, J. Vissides or “Object-Oriented Analysis and Design with Applications” by G. Booch, and more.
 
-
 // ******** “this” is not bound **********
 
+// In JavaScript, keyword `this` behaves unlike most other programming languages.
+// It can be used in any function, even if it’s not a method of an object.
+
+let pager = {
+  name: 'Pari',
+  age: 33
+};
+
+let fazer = {
+  name: 'Urbashi',
+  age: 17
+};
+
+function saySomething() {
+  return this.name;
+}
+
+// // use the same function in two objects
+pager.f = saySomething;
+fazer.f = saySomething;
+
+// console.log(pager.f()); // Pari   ==> `this` refers to `pager`
+// console.log(fazer.f()); // Urbashi  ==> `this` refers to `fazer`
+
+//  *********** Calling without an object: this == undefined **************
+
+function sayNothing() {
+  console.log(this);
+}
+
+// sayNothing(); // window ==> `global object`
+
+// in strict mode, this is `undefined`.
+
+// Usually such call is a programming error. If there’s this inside a function, it expects to be called in an object context.
+
+// ******* The consequences of unbound this *****
+
+// 1. If you come from another programming language, then you are probably used to the idea of a "bound this", where methods defined in an object always have this referencing that object.
+
+// 2. In JavaScript this is “free”, its value is evaluated at call-time and does not depend on where the method was declared, but rather on what object is “before the dot”.
+
+// 3. The concept of run-time evaluated this has both pluses and minuses. On the one hand, a function can be reused for different objects. On the other hand, the greater flexibility creates more possibilities for mistakes.
+
+
+// ********* Arrow functions have no “this” *******
+
+// 1. Arrow functions are special: they don’t have their “own” this. If we reference this from such a function, it’s taken from the outer “normal” function.
+
+// 2. For instance, here arrow() uses this from the outer user.sayHi() method:
+
+let kaiser = {
+  firstName: "Esha",
+  sayHi(){
+    let arrow = ()=> console.log(this.firstName);
+
+    arrow();
+  }
+};
+
+kaiser.sayHi();   // Esha
+
+// That’s a special feature of arrow functions, it’s useful when we actually do not want to have a separate this, but rather to take it from the outer context. 
